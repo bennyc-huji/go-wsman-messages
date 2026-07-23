@@ -130,73 +130,186 @@ func TestPositiveAMT_AuthorizationService(t *testing.T) {
 					},
 				},
 			},
-			// // AUTHORIZATION SERVICE
-
-			// // ADD USER ACL ENTRY EX
-			// // Verify with Matt - Typescript is referring to wrong realm values
-			// // {"should return a valid amt_AuthorizationService ADD_USER_ACL_ENTRY_EX wsman message using digest", AMT_AuthorizationService, ADD_USER_ACL_ENTRY_EX, logrus.Sprintf(`<h:AddUserAclEntryEx_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:DigestUsername>%s</h:DigestUsername><h:DigestPassword>%s</h:DigestPassword><h:AccessPermission>%d</h:AccessPermission><h:Realms>%d</h:Realms></h:AddUserAclEntryEx_INPUT>`, "test", "P@ssw0rd", 2, 3), func() string {
-			// // 	return elementUnderTest.AddUserAclEntryEx(authorization.AccessPermissionLocalAndNetworkAccess, []authorization.RealmValues{authorization.RedirectionRealm}, "test", "P@ssw0rd", "")
-			// // }},
-			// // {"should return a valid amt_AuthorizationService ADD_USER_ACL_ENTRY_EX wsman message using kerberos", AMT_AuthorizationService, ADD_USER_ACL_ENTRY_EX, logrus.Sprintf(`<h:AddUserAclEntryEx_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:KerberosUserSid>%d</h:KerberosUserSid><h:AccessPermission>%d</h:AccessPermission><h:Realms>%d3</h:Realms></h:AddUserAclEntryEx_INPUT>`, 64, 2, 3), func() string {
-			// // 	return elementUnderTest.AddUserAclEntryEx(authorization.AccessPermissionLocalAndNetworkAccess, []authorization.RealmValues{authorization.RedirectionRealm}, "", "", "64")
-			// // }},
-			// // // Check how to verify for exceptions
-			// // // {"should throw an error if the digestUsername is longer than 16 when calling AddUserAclEntryEx", "", "", "", func() string {
-			// // // 	return elementUnderTest.AddUserAclEntryEx(2, []models.RealmValues{models.RedirectionRealm}, "thisusernameistoolong", "test", "")
-			// // // }},
-			// // ENUMERATE USER ACL ENTRIES
-			// {"should return a valid amt_AuthorizationService EnumerateUserAclEntries wsman message when startIndex is undefined", AMT_AuthorizationService, `http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/EnumerateUserAclEntries`, logrus.Sprintf(`<h:EnumerateUserAclEntries_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:StartIndex>%d</h:StartIndex></h:EnumerateUserAclEntries_INPUT>`, 1), func() string {
-			// 	var index int
-			// 	return elementUnderTest.EnumerateUserAclEntries(index)
-			// }},
-			// {"should return a valid amt_AuthorizationService EnumerateUserAclEntries wsman message when startIndex is not 1", AMT_AuthorizationService, `http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/EnumerateUserAclEntries`, logrus.Sprintf(`<h:EnumerateUserAclEntries_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:StartIndex>%d</h:StartIndex></h:EnumerateUserAclEntries_INPUT>`, 50), func() string {
-			// 	return elementUnderTest.EnumerateUserAclEntries(50)
-			// }},
-			// // GET USER ACL ENTRY EX
-			// {"should return a valid amt_AuthorizationService GetUserAclEntryEx wsman message", AMT_AuthorizationService, `http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/GetUserAclEntryEx`, `<h:GetUserAclEntryEx_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:Handle>1</h:Handle></h:GetUserAclEntryEx_INPUT>`, func() string {
-			// 	return elementUnderTest.GetUserAclEntryEx(1)
-			// }},
-			// // UPDATE USER ACL ENTRY EX
-			// // {"should return a valid amt_AuthorizationService UpdateUserAclEntryEx wsman message using digest", AMT_AuthorizationService, `http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/UpdateUserAclEntryEx`, `<h:GetUserAclEntryEx_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:Handle>1</h:Handle></h:GetUserAclEntryEx_INPUT>`, func() string {
-			// // 	return elementUnderTest.UpdateUserAclEntryEx(1, 2, []authorization.RealmValues{authorization.RedirectionRealm}, "test", "test123!", "")
-			// // }},
-			// // {"should return a valid amt_AuthorizationService UpdateUserAclEntryEx wsman message using kerberos", AMT_AuthorizationService, `http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/UpdateUserAclEntryEx`, `<h:UpdateUserAclEntryEx_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:Handle>1</h:Handle><h:KerberosUserSid>64</h:KerberosUserSid><h:AccessPermission>2</h:AccessPermission><h:Realms>3</h:Realms></h:UpdateUserAclEntryEx_INPUT>`, func() string {
-			// // 	return elementUnderTest.UpdateUserAclEntryEx(1, 2, []authorization.RealmValues{authorization.RedirectionRealm}, "", "", "64")
-			// // }},
-			// // // should throw an error if digest or kerberos credentials are not provided to UpdateUserAclEntryEx
-			// // // should throw an error if the digestUsername is longer than 16 when calling UpdateUserAclEntryEx
-
-			// // REMOVE USER ACL ENTRY
-			// {"should return a valid amt_AuthorizationService RemoveUserAclEntry wsman message", AMT_AuthorizationService, `http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/RemoveUserAclEntry`, `<h:RemoveUserAclEntry_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:Handle>1</h:Handle></h:RemoveUserAclEntry_INPUT>`, func() string {
-			// 	return elementUnderTest.RemoveUserAclEntry(1)
-			// }},
-
-			// // GET ADMIN ACL ENTRY
-			// {"should return a valid amt_AuthorizationService GetAdminAclEntry wsman message", AMT_AuthorizationService, `http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/GetAdminAclEntry`, `<h:GetAdminAclEntry_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"></h:GetAdminAclEntry_INPUT>`, func() string {
-			// 	return elementUnderTest.GetAdminAclEntry()
-			// }},
-
-			// // GET ADMIN ACL ENTRY STATUS
-			// {"should return a valid amt_AuthorizationService GetAdminAclEntry wsman message", AMT_AuthorizationService, `http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/GetAdminAclEntryStatus`, `<h:GetAdminAclEntryStatus_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"></h:GetAdminAclEntryStatus_INPUT>`, func() string {
-			// 	return elementUnderTest.GetAdminAclEntryStatus()
-			// }},
-
-			// // GET ADMIN NET ACL ENTRY STATUS
-			// {"should return a valid amt_AuthorizationService GetAdminNetAclEntryStatus wsman message", AMT_AuthorizationService, `http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/GetAdminNetAclEntryStatus`, `<h:GetAdminNetAclEntryStatus_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"></h:GetAdminNetAclEntryStatus_INPUT>`, func() string {
-			// 	return elementUnderTest.GetAdminNetAclEntryStatus()
-			// }},
-
-			// // GET ACL ENABLED STATE
-			// {"should return a valid amt_AuthorizationService GetAclEnabledState wsman message", AMT_AuthorizationService, `http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/GetAclEnabledState`, `<h:GetAclEnabledState_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:Handle>1</h:Handle></h:GetAclEnabledState_INPUT>`, func() string {
-			// 	return elementUnderTest.GetAclEnabledState(1)
-			// }},
-
-			// SET ADMIN ACL ENTRY
+			// AUTHORIZATION SERVICE
+			{
+				"should create a valid amt_AuthorizationService AddUserAclEntryEx wsman message using digest",
+				AMTAuthorizationService,
+				`http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/AddUserAclEntryEx`,
+				`<h:AddUserAclEntryEx_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:AccessPermission>2</h:AccessPermission><h:DigestPassword>P@ssw0rd</h:DigestPassword><h:DigestUsername>test</h:DigestUsername><h:Realms>3</h:Realms></h:AddUserAclEntryEx_INPUT>`,
+				func() (Response, error) {
+					client.CurrentMessage = "AddUserAclEntryEx"
+					return elementUnderTest.AddUserAclEntryEx("test", "P@ssw0rd", AccessPermissionLocalAndNetworkAccess, []RealmValues{RealmValuesPTAdministrationRealm})
+				},
+				Body{
+					XMLName: xml.Name{Space: "http://www.w3.org/2003/05/soap-envelope", Local: "Body"},
+					AddUserResponse: AddUserAclEntryEx_OUTPUT{
+						ReturnValue: 0,
+						Handle:      1,
+					},
+				},
+			},
+			{
+				"should return a valid amt_AuthorizationService EnumerateUserAclEntries wsman message when startIndex is 0 (defaults to 1)",
+				AMTAuthorizationService,
+				`http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/EnumerateUserAclEntries`,
+				`<h:EnumerateUserAclEntries_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:StartIndex>1</h:StartIndex></h:EnumerateUserAclEntries_INPUT>`,
+				func() (Response, error) {
+					client.CurrentMessage = "EnumerateUserAclEntries"
+					return elementUnderTest.EnumerateUserACLEntries(0)
+				},
+				Body{
+					XMLName: xml.Name{Space: "http://www.w3.org/2003/05/soap-envelope", Local: "Body"},
+					EnumerateUserResponse: EnumerateUserAclEntries_OUTPUT{
+						TotalCount:   2,
+						HandlesCount: 2,
+						Handles:      []int{1, 2},
+						ReturnValue:  0,
+					},
+				},
+			},
+			{
+				"should return a valid amt_AuthorizationService EnumerateUserAclEntries wsman message when startIndex is not 1",
+				AMTAuthorizationService,
+				`http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/EnumerateUserAclEntries`,
+				`<h:EnumerateUserAclEntries_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:StartIndex>50</h:StartIndex></h:EnumerateUserAclEntries_INPUT>`,
+				func() (Response, error) {
+					client.CurrentMessage = "EnumerateUserAclEntries"
+					return elementUnderTest.EnumerateUserACLEntries(50)
+				},
+				Body{
+					XMLName: xml.Name{Space: "http://www.w3.org/2003/05/soap-envelope", Local: "Body"},
+					EnumerateUserResponse: EnumerateUserAclEntries_OUTPUT{
+						TotalCount:   2,
+						HandlesCount: 2,
+						Handles:      []int{1, 2},
+						ReturnValue:  0,
+					},
+				},
+			},
+			{
+				"should return a valid amt_AuthorizationService GetUserAclEntryEx wsman message",
+				AMTAuthorizationService,
+				`http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/GetUserAclEntryEx`,
+				`<h:GetUserAclEntryEx_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:Handle>1</h:Handle></h:GetUserAclEntryEx_INPUT>`,
+				func() (Response, error) {
+					client.CurrentMessage = "GetUserAclEntryEx"
+					return elementUnderTest.GetUserACLEntryEx(1)
+				},
+				Body{
+					XMLName: xml.Name{Space: "http://www.w3.org/2003/05/soap-envelope", Local: "Body"},
+					GetUserResponse: GetUserAclEntryEx_OUTPUT{
+						DigestUsername:   "$$uns",
+						AccessPermission: 0,
+						Realms:           []RealmValues{16},
+						ReturnValue:      0,
+					},
+				},
+			},
+			{
+				"should return a valid amt_AuthorizationService RemoveUserAclEntry wsman message",
+				AMTAuthorizationService,
+				`http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/RemoveUserAclEntry`,
+				`<h:RemoveUserAclEntry_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:Handle>1</h:Handle></h:RemoveUserAclEntry_INPUT>`,
+				func() (Response, error) {
+					client.CurrentMessage = "RemoveUserAclEntry"
+					return elementUnderTest.RemoveUserACLEntry(1)
+				},
+				Body{
+					XMLName: xml.Name{Space: "http://www.w3.org/2003/05/soap-envelope", Local: "Body"},
+					RemoveUserResponse: RemoveUserAclEntry_OUTPUT{
+						ReturnValue: 0,
+					},
+				},
+			},
+			{
+				"should return a valid amt_AuthorizationService GetAdminAclEntry wsman message",
+				AMTAuthorizationService,
+				`http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/GetAdminAclEntry`,
+				`<h:GetAdminAclEntry xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"></h:GetAdminAclEntry>`,
+				func() (Response, error) {
+					client.CurrentMessage = "GetAdminAclEntry"
+					return elementUnderTest.GetAdminACLEntry()
+				},
+				Body{
+					XMLName: xml.Name{Space: "http://www.w3.org/2003/05/soap-envelope", Local: "Body"},
+					GetAdminResponse: GetAdminAclEntry_OUTPUT{
+						Username:    "admin",
+						ReturnValue: 0,
+					},
+				},
+			},
+			{
+				"should return a valid amt_AuthorizationService GetAdminAclEntryStatus wsman message",
+				AMTAuthorizationService,
+				`http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/GetAdminAclEntryStatus`,
+				`<h:GetAdminAclEntryStatus xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"></h:GetAdminAclEntryStatus>`,
+				func() (Response, error) {
+					client.CurrentMessage = "GetAdminAclEntryStatus"
+					return elementUnderTest.GetAdminACLEntryStatus()
+				},
+				Body{
+					XMLName: xml.Name{Space: "http://www.w3.org/2003/05/soap-envelope", Local: "Body"},
+					GetAdminStatusResponse: GetAdminAclEntryStatus_OUTPUT{
+						IsDefault:   false,
+						ReturnValue: 0,
+					},
+				},
+			},
+			{
+				"should return a valid amt_AuthorizationService GetAdminNetAclEntryStatus wsman message",
+				AMTAuthorizationService,
+				`http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/GetAdminNetAclEntryStatus`,
+				`<h:GetAdminNetAclEntryStatus xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"></h:GetAdminNetAclEntryStatus>`,
+				func() (Response, error) {
+					client.CurrentMessage = "GetAdminNetAclEntryStatus"
+					return elementUnderTest.GetAdminNetACLEntryStatus()
+				},
+				Body{
+					XMLName: xml.Name{Space: "http://www.w3.org/2003/05/soap-envelope", Local: "Body"},
+					GetAdminNetStatusResponse: GetAdminNetAclEntryStatus_OUTPUT{
+						IsDefault:   false,
+						ReturnValue: 0,
+					},
+				},
+			},
+			{
+				"should return a valid amt_AuthorizationService GetAclEnabledState wsman message",
+				AMTAuthorizationService,
+				`http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/GetAclEnabledState`,
+				`<h:GetAclEnabledState_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:Handle>1</h:Handle></h:GetAclEnabledState_INPUT>`,
+				func() (Response, error) {
+					client.CurrentMessage = "GetAclEnabledState"
+					return elementUnderTest.GetACLEnabledState(1)
+				},
+				Body{
+					XMLName: xml.Name{Space: "http://www.w3.org/2003/05/soap-envelope", Local: "Body"},
+					GetACLEnabledStateResponse: GetAclEnabledState_OUTPUT{
+						Enabled:     true,
+						ReturnValue: 0,
+					},
+				},
+			},
+			{
+				"should return a valid amt_AuthorizationService SetAclEnabledState wsman message",
+				AMTAuthorizationService,
+				`http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/SetAclEnabledState`,
+				`<h:SetAclEnabledState_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:Enabled>true</h:Enabled><h:Handle>1</h:Handle></h:SetAclEnabledState_INPUT>`,
+				func() (Response, error) {
+					client.CurrentMessage = "SetAclEnabledState"
+					return elementUnderTest.SetACLEnabledState(1, true)
+				},
+				Body{
+					XMLName: xml.Name{Space: "http://www.w3.org/2003/05/soap-envelope", Local: "Body"},
+					SetACLEnabledStateResponse: SetAclEnabledState_OUTPUT{
+						ReturnValue: 0,
+					},
+				},
+			},
 			{
 				"should return a valid amt_AuthorizationService SetAdminAclEntryEx wsman message",
 				AMTAuthorizationService,
 				`http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService/SetAdminAclEntryEx`,
-				`<h:SetAdminAclEntryEx_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:Username>admin</h:Username><h:DigestPassword>AMviB05zT+twP2E9Tn/hPA==</h:DigestPassword></h:SetAdminAclEntryEx_INPUT>`,
+				`<h:SetAdminAclEntryEx_INPUT xmlns:h="http://intel.com/wbem/wscim/1/amt-schema/1/AMT_AuthorizationService"><h:DigestPassword>AMviB05zT+twP2E9Tn/hPA==</h:DigestPassword><h:Username>admin</h:Username></h:SetAdminAclEntryEx_INPUT>`,
 				func() (Response, error) {
 					client.CurrentMessage = "SetAdminAclEntryEx"
 

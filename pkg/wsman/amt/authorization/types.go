@@ -23,18 +23,65 @@ type (
 		Body    Body           `xml:"Body"`
 	}
 	Body struct {
-		XMLName           xml.Name `xml:"Body"`
-		GetResponse       AuthorizationOccurrence
-		EnumerateResponse common.EnumerateResponse
-		PullResponse      PullResponse
-		SetAdminResponse  SetAdminAclEntryEx_OUTPUT
+		XMLName                     xml.Name `xml:"Body"`
+		GetResponse                 AuthorizationOccurrence
+		EnumerateResponse           common.EnumerateResponse
+		PullResponse                PullResponse
+		SetAdminResponse            SetAdminAclEntryEx_OUTPUT        `xml:"SetAdminAclEntryEx_OUTPUT"`
+		AddUserResponse             AddUserAclEntryEx_OUTPUT         `xml:"AddUserAclEntryEx_OUTPUT"`
+		RemoveUserResponse          RemoveUserAclEntry_OUTPUT        `xml:"RemoveUserAclEntry_OUTPUT"`
+		GetUserResponse             GetUserAclEntryEx_OUTPUT         `xml:"GetUserAclEntryEx_OUTPUT"`
+		GetACLEnabledStateResponse  GetAclEnabledState_OUTPUT        `xml:"GetAclEnabledState_OUTPUT"`
+		GetAdminResponse            GetAdminAclEntry_OUTPUT          `xml:"GetAdminAclEntry_OUTPUT"`
+		GetAdminStatusResponse      GetAdminAclEntryStatus_OUTPUT    `xml:"GetAdminAclEntryStatus_OUTPUT"`
+		GetAdminNetStatusResponse   GetAdminNetAclEntryStatus_OUTPUT `xml:"GetAdminNetAclEntryStatus_OUTPUT"`
+		SetACLEnabledStateResponse  SetAclEnabledState_OUTPUT        `xml:"SetAclEnabledState_OUTPUT"`
+		EnumerateUserResponse       EnumerateUserAclEntries_OUTPUT   `xml:"EnumerateUserAclEntries_OUTPUT"`
 	}
 	SetAdminAclEntryEx_OUTPUT struct {
 		ReturnValue ReturnValue `xml:"ReturnValue"`
 	}
 	AddUserAclEntry_OUTPUT struct {
 		ReturnValue ReturnValue `xml:"ReturnValue"`
-
+	}
+	AddUserAclEntryEx_OUTPUT struct {
+		ReturnValue ReturnValue `xml:"ReturnValue"`
+		Handle      int         `xml:"Handle"`
+	}
+	RemoveUserAclEntry_OUTPUT struct {
+		ReturnValue ReturnValue `xml:"ReturnValue"`
+	}
+	GetAclEnabledState_OUTPUT struct {
+		Enabled     bool        `xml:"Enabled"`
+		ReturnValue ReturnValue `xml:"ReturnValue"`
+	}
+	GetAdminAclEntry_OUTPUT struct {
+		Username    string      `xml:"Username"`
+		ReturnValue ReturnValue `xml:"ReturnValue"`
+	}
+	GetAdminAclEntryStatus_OUTPUT struct {
+		IsDefault   bool        `xml:"IsDefault"`
+		ReturnValue ReturnValue `xml:"ReturnValue"`
+	}
+	GetAdminNetAclEntryStatus_OUTPUT struct {
+		IsDefault   bool        `xml:"IsDefault"`
+		ReturnValue ReturnValue `xml:"ReturnValue"`
+	}
+	SetAclEnabledState_OUTPUT struct {
+		ReturnValue ReturnValue `xml:"ReturnValue"`
+	}
+	GetUserAclEntryEx_OUTPUT struct {
+		DigestUsername   string           `xml:"DigestUsername,omitempty"`
+		KerberosUserSid  string           `xml:"KerberosUserSid,omitempty"`
+		AccessPermission AccessPermission `xml:"AccessPermission"`
+		Realms           []RealmValues    `xml:"Realms"`
+		ReturnValue      ReturnValue      `xml:"ReturnValue"`
+	}
+	EnumerateUserAclEntries_OUTPUT struct {
+		TotalCount   int         `xml:"TotalCount"`
+		HandlesCount int         `xml:"HandlesCount"`
+		Handles      []int       `xml:"Handles"`
+		ReturnValue  ReturnValue `xml:"ReturnValue"`
 	}
 	AuthorizationOccurrence struct {
 		XMLName                 xml.Name       `xml:"AMT_AuthorizationService"`
@@ -103,34 +150,34 @@ type (
 	SetAclEnabledState_INPUT struct {
 		XMLName xml.Name `xml:"h:SetAclEnabledState_INPUT"`
 		H       string   `xml:"xmlns:h,attr"`
-		Handle  int      `xml:"h:Handle"`  // Specifies the ACL entry to update
 		Enabled bool     `xml:"h:Enabled"` // Specifies the state of the ACL entry
+		Handle  int      `xml:"h:Handle"`  // Specifies the ACL entry to update
 	}
 
 	SetAdminAclEntryEx_INPUT struct {
 		XMLName        xml.Name `xml:"h:SetAdminAclEntryEx_INPUT"`
 		H              string   `xml:"xmlns:h,attr"`
-		Username       string   `xml:"h:Username"`       // Username for access control. Contains 7-bit ASCII characters. String length is limited to 16 characters. Username cannot be an empty string.
 		DigestPassword string   `xml:"h:DigestPassword"` // An MD5 Hash of these parameters concatenated together (Username + ":" + DigestRealm + ":" + Password). The DigestRealm is a field in AMT_GeneralSettings
+		Username       string   `xml:"h:Username"`       // Username for access control. Contains 7-bit ASCII characters. String length is limited to 16 characters. Username cannot be an empty string.
 	}
 	AddUserAclEntryEx_INPUT struct {
 		XMLName          xml.Name         `xml:"h:AddUserAclEntryEx_INPUT"`
 		H                string           `xml:"xmlns:h,attr"`
-		Handle           int              `xml:"h:Handle,omitempty"`              // Contains a creation handle.
-		DigestUsername   string           `xml:"h:DigestUsername"`                // Username for access control. Contains 7-bit ASCII characters. String length is limited to 16 characters. Username cannot be an empty string.
-		DigestPassword   string           `xml:"h:DigestPassword"`                // An MD5 Hash of these parameters concatenated together (Username + ":" + DigestRealm + ":" + Password). The DigestRealm is a field in AMT_GeneralSettings
 		AccessPermission AccessPermission `xml:"h:AccessPermission"`              // Indicates whether the User is allowed to access Intel® AMT from the Network or Local Interfaces. Note: this definition is restricted by the Default Interface Access Permissions of each Realm.
-		Realms           []RealmValues   `xml:"h:Realms,omitempty"` // Array of interface names the ACL entry is allowed to access.
+		DigestPassword   string           `xml:"h:DigestPassword"`                // An MD5 Hash of these parameters concatenated together (Username + ":" + DigestRealm + ":" + Password). The DigestRealm is a field in AMT_GeneralSettings
+		DigestUsername   string           `xml:"h:DigestUsername"`                // Username for access control. Contains 7-bit ASCII characters. String length is limited to 16 characters. Username cannot be an empty string.
+		Handle           int              `xml:"h:Handle,omitempty"`              // Contains a creation handle.
 		KerberosUserSid  string           `xml:"h:KerberosUserSid,omitempty"`               // Descriptor for user (SID) which is authenticated using the Kerberos Authentication. Byte array, specifying the Security Identifier (SID) according to the Kerberos specification. Current requirements imply that SID should be not smaller than 1 byte length and no longer than 28 bytes. SID length should also be a multiplicand of 4.
+		Realms           []RealmValues    `xml:"h:Realms,omitempty"`              // Array of interface names the ACL entry is allowed to access.
 	}
 	UpdateUserAclEntry struct {
 		XMLName          xml.Name         `xml:"h:UpdateUserAclEntry_INPUT"`
 		H                string           `xml:"xmlns:h,attr"`
-		Handle           int              `xml:"h:Handle,omitempty"`              // Contains a creation handle.
-		DigestUsername   string           `xml:"h:DigestUsername"`                // Username for access control. Contains 7-bit ASCII characters. String length is limited to 16 characters. Username cannot be an empty string.
-		DigestPassword   string           `xml:"h:DigestPassword"`                // An MD5 Hash of these parameters concatenated together (Username + ":" + DigestRealm + ":" + Password). The DigestRealm is a field in AMT_GeneralSettings
 		AccessPermission AccessPermission `xml:"h:AccessPermission"`              // Indicates whether the User is allowed to access Intel® AMT from the Network or Local Interfaces. Note: this definition is restricted by the Default Interface Access Permissions of each Realm.
-		Realms           []RealmValues    `xml:"h:Realms>h:RealmValue,omitempty"` // Array of interface names the ACL entry is allowed to access.
+		DigestPassword   string           `xml:"h:DigestPassword"`                // An MD5 Hash of these parameters concatenated together (Username + ":" + DigestRealm + ":" + Password). The DigestRealm is a field in AMT_GeneralSettings
+		DigestUsername   string           `xml:"h:DigestUsername"`                // Username for access control. Contains 7-bit ASCII characters. String length is limited to 16 characters. Username cannot be an empty string.
+		Handle           int              `xml:"h:Handle,omitempty"`              // Contains a creation handle.
 		KerberosUserSid  string           `xml:"h:KerberosUserSid"`               // Descriptor for user (SID) which is authenticated using the Kerberos Authentication. Byte array, specifying the Security Identifier (SID) according to the Kerberos specification. Current requirements imply that SID should be not smaller than 1 byte length and no longer than 28 bytes. SID length should also be a multiplicand of 4.
+		Realms           []RealmValues    `xml:"h:Realms>h:RealmValue,omitempty"` // Array of interface names the ACL entry is allowed to access.
 	}
 )
